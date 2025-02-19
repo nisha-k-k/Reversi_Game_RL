@@ -7,23 +7,31 @@ class Reversi:
     """Handles the game logic for Reversi (Othello)."""
 
     def __init__(self):
-        self.board = np.zeros((8, 8), dtype=int)
-        self.board[3][3], self.board[4][4] = -1, -1  # White pieces
-        self.board[3][4], self.board[4][3] = 1, 1    # Black pieces
-        self.current_player = 1
+        self.board = np.zeros((8, 8), dtype=int) # creates 8 x 8 board
+        self.board[3][3], self.board[4][4] = -1, -1  # Sets initial white pieces
+        self.board[3][4], self.board[4][3] = 1, 1    # Sets initial black pieces
+        self.current_player = 1 
         self.game_over = False  # Track if game has ended
 
     def get_valid_moves(self, player):
-        """Returns a list of valid moves for the given player."""
-        directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+        """Returns a list of valid moves for the given player.
+        D = Down
+        U = Up
+        L = Left
+        R = Right
+
+        Playable directions: (D1, L1), (D1), (D1, R1), (L1), (R1), (U1, L1), (U1), (U1, R1) 
+        """
+        
+        directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)] 
         valid_moves = []
         
         for x in range(8):
             for y in range(8):
                 if self.board[x, y] != 0:
                     continue
-                for dx, dy in directions:
-                    nx, ny = x + dx, y + dy
+                for dx, dy in directions: #for each direction possibility
+                    nx, ny = x + dx, y + dy 
                     captured = []
                     while 0 <= nx < 8 and 0 <= ny < 8 and self.board[nx, ny] == -player:
                         captured.append((nx, ny))
@@ -76,13 +84,14 @@ class ReversiGUI:
         self.game = Reversi()
         self.mode = None
 
-        self.canvas = tk.Canvas(self.master, width=400, height=400, bg="green")
+        self.canvas = tk.Canvas(self.master, width=400, height=400, bg="green") #creates the look of the base board
         self.canvas.grid(row=0, column=0, columnspan=3)
         self.canvas.bind("<Button-1>", self.on_click)
 
         self.status_label = tk.Label(self.master, text="Select Game Mode", font=("Arial", 12))
         self.status_label.grid(row=1, column=0, columnspan=3)
 
+        # Add Buttons for user to choose if they want User vs Ai or User vs User
         tk.Button(self.master, text="User vs AI", command=lambda: self.set_mode("AI")).grid(row=2, column=0)
         tk.Button(self.master, text="User vs User", command=lambda: self.set_mode("User")).grid(row=2, column=1)
 
