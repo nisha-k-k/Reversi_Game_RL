@@ -24,7 +24,7 @@ A fully functional **Reversi (Othello) game** built with **Python & Tkinter** ut
   ```
 ### 2️⃣ Clone the Repository
 ```sh
-git clone [https://github.com/nisha-k-k/Reversi_Game_RL.git](https://github.com/nisha-k-k/Reversi_Game_RL.git)
+git clone https://github.com/nisha-k-k/Reversi_Game_RL.git
 cd Reversi_Game_RL
 ```
 
